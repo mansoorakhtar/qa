@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Question;
-use Illuminate\Http\Request;
 use App\Http\Requests\AskQuestionRequest;
 
 class QuestionsController extends Controller
@@ -46,9 +45,9 @@ class QuestionsController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Requests\AskQuestionRequest
      */
-    public function show(Question $question)
+    public function show(AskQuestionRequest $question)
     {
         //
     }
@@ -61,19 +60,20 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
-        //
+        return view('questions.edit', ['question' => $question]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\AskQuestionRequest  $request
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(AskQuestionRequest $request, Question $question)
     {
-        //
+        $question->update($request->only('title', 'body'));
+        return redirect()->route('questions.index')->with('success', 'Your question has been updated');
     }
 
     /**
