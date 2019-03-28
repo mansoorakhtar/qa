@@ -47,9 +47,10 @@ class QuestionsController extends Controller
      * @param  \App\Question  $question
      * @return \App\Http\Requests\AskQuestionRequest
      */
-    public function show(AskQuestionRequest $question)
+    public function show(Question $question)
     {
-        //
+        $question->increment('views');
+        return view('questions.show', ['question' => $question]);
     }
 
     /**
